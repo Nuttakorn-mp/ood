@@ -4,51 +4,27 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, Platform, TouchableOpacity, TouchableNativeFeedback, Button} from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, Button, TouchableOpacity} from 'react-native';
 
-export default class App extends Component {
-  _onPressButton() {
-    alert('You tapped the button!')
-  }
-  MyStack(){
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{title: 'Welcome'}}
-        />
-        <Stack.Screen name="Home" component={Home} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  }
-  gofood({navigation}) {
-    return (
-      <Button
-        title="Go to food screen!"
-        onPress={() => navigation.navigate('food', {name: 'food'})}
-      />
-    );
-  }
-
-
-  render() {
-    return (
+function HomeScreen({ navigation }) {
+  return (
     <>
     <ScrollView>
       <View style={{ flex: 1, flexDirection: 'column', justifyContent: "flex-start", alignItems: 'stretch', }}>
         <View style={{ height: 120, backgroundColor: '#d7d5d2' }} />
+        <View style={{width: 50, height: 50, backgroundColor: 'white', position: 'absolute', alignSelf: 'flex-start', top:50, left:20}} >
+          <TouchableOpacity>
+            <Image
+              source={{ uri: 'https://reactnative.dev/docs/assets/p_cat1.png' }}
+              style={{ width: 50, height: 50 }} />
+          </TouchableOpacity>
+        </View>
         <Text style={{
           colors: 'black',
           fontWeight: 'bold',
           fontSize: 40,
           backgroundColor: '#d7d5d2',
-          position: 'absolute', top: 50, left: 10
-        }}>
-          <Image
-            source={{ uri: 'https://reactnative.dev/docs/assets/p_cat1.png' }}
-            style={{ width: 50, height: 50 }} />
-          <View style={{ width: 10, height: 50 }} />Health Me</Text>
+          position: 'absolute', top: 50, left: 80}}>Health Me</Text>
         <View style={{ height: 450, backgroundColor: '#0f4c81' }} />
         <Text style={{
           color: 'white',
@@ -85,14 +61,14 @@ export default class App extends Component {
           position: 'absolute', alignSelf: 'center', top: 530}}>... - ... Kcal</Text>
 
         <View style={{ width: 50, height: 50, backgroundColor: 'white', position: 'absolute', alignSelf: 'flex-end', top: 500, right: 20 }} >
-          <TouchableOpacity onPress={this._onPressButton}>
+          
+          <TouchableOpacity onPress={() => navigation.navigate('Details')}>
             <Image
               source={{ uri: 'https://reactnative.dev/docs/assets/p_cat1.png' }}
               // style={{ width: 50, height: 50, backgroundColor:'white', position:'absolute',alignSelf:'flex-end',top:500,right:20}} />
               style={{ width: 50, height: 50 }} />
           </TouchableOpacity>
         </View>
-
 
         <View style={{ height: 50, backgroundColor: '#d7d5d2' }} />
         <View style={{ height: 200, backgroundColor: '#0f4c81' }} />
@@ -114,12 +90,45 @@ export default class App extends Component {
 
       </View>
 
+      {/* <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Home Screen</Text>
+        <Button
+          title="Go to Details"
+          onPress={() => navigation.navigate('Details')}
+          />
+      </View> */}
     </ScrollView>
+    </>
+  );
+}
+
+function DetailsScreen() {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Details Screen</Text>
+    </View>
+  );
+}
+
+const Stack = createStackNavigator();
+
+
+export default class App extends Component {
+
+  render() {
+    return (
+    <>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Details" component={DetailsScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
     </>
     );
   }
 }
-const Stack = createStackNavigator();
+// const Stack = createStackNavigator();
 const styles = StyleSheet.create({
   container: {
    flex: 1,
